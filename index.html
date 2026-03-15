@@ -3,47 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scribe — Offline AI Subtitle Generator & Speech to Text Tool for Windows</title>
-    <meta name="description" content="Scribe is a free offline subtitle generator and speech-to-text transcription tool for Windows. Powered by Whisper large-v3. 99 languages, GPU accelerated, no cloud uploads. Generate .srt subtitles and .txt transcripts locally. Pay once, use forever.">
-    <meta name="keywords" content="subtitle generator, automatic subtitles, AI transcription, speech to text, offline transcription, subtitle tool, Whisper transcription, local transcription, subtitle creator, Whisper GUI, speech to text software, automatic subtitle generator, video transcription, audio transcription, srt generator, offline speech recognition">
+    <title>Hexwright Studios — Desktop Tools That Work Offline</title>
+    <meta name="description" content="Hexwright Studios builds offline-first desktop tools. No subscriptions, no cloud, no accounts. Pay once, use forever.">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Hexwright Studios">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Scribe — Offline AI Subtitle Generator">
-    <meta property="og:description" content="Drop a video, get subtitles. 99 languages, GPU accelerated, fully offline. No cloud, no subscriptions. Pay once, use forever.">
-    <meta property="og:image" content="hero-banner.png">
+    <meta property="og:title" content="Hexwright Studios — Desktop Tools That Work Offline">
+    <meta property="og:description" content="No subscriptions, no cloud, no accounts. Pay once, use forever.">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Scribe by Hexwright Studios">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Scribe — Offline AI Subtitle Generator">
-    <meta name="twitter:description" content="Drop a video, get subtitles. 99 languages, GPU accelerated, fully offline. No subscriptions.">
-    <meta name="twitter:image" content="hero-banner.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Scribe",
-        "description": "Offline AI subtitle generator and speech-to-text transcription tool for Windows. Powered by Whisper large-v3. 99 languages, GPU accelerated, fully offline.",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Windows 10+",
-        "offers": {
-            "@type": "Offer",
-            "price": "19.99",
-            "priceCurrency": "USD"
-        },
-        "author": {
-            "@type": "Organization",
-            "name": "Hexwright Studios"
-        },
-        "softwareVersion": "1.0",
-        "featureList": "Subtitle generation, Transcription, 99 languages, GPU acceleration, Offline processing, Whisper large-v3"
-    }
-    </script>
+    <meta property="og:site_name" content="Hexwright Studios">
 
     <style>
         * {
@@ -60,29 +28,16 @@
             overflow-x: hidden;
         }
 
-        /* Screen reader only — visible to Google, hidden visually */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
         /* Hero */
         .hero {
-            min-height: 100vh;
+            min-height: 60vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
-            background: radial-gradient(ellipse at 50% 80%, rgba(124, 92, 191, 0.15) 0%, transparent 60%),
+            padding: 4rem 2rem;
+            background: radial-gradient(ellipse at 50% 80%, rgba(124, 92, 191, 0.1) 0%, transparent 60%),
                         linear-gradient(180deg, #0d0d1a 0%, #131328 100%);
             position: relative;
         }
@@ -95,304 +50,257 @@
             transform: translateX(-50%);
             width: 60%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #7c5cbf, transparent);
+            background: linear-gradient(90deg, transparent, rgba(124, 92, 191, 0.5), transparent);
         }
 
-        .hero-image {
-            max-width: 700px;
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        .studio-name {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
         }
 
-        .hero .tagline {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            color: #b0b0c0;
-            max-width: 600px;
-            margin-bottom: 2.5rem;
+        .studio-name strong {
+            font-weight: 600;
+        }
+
+        .studio-tagline {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: #888;
+            max-width: 550px;
             font-weight: 300;
         }
 
-        .hero .tagline strong {
-            color: #fff;
-            font-weight: 500;
+        .studio-philosophy {
+            margin-top: 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, #7c5cbf, #9b6dd7);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 0.03em;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(124, 92, 191, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(124, 92, 191, 0.5);
-            background: linear-gradient(135deg, #8d6dd0, #ab7de7);
-        }
-
-        .cta-price {
-            display: block;
-            margin-top: 0.75rem;
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        .cta-price s {
+        .philosophy-item {
             color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        /* Sections */
-        section {
-            max-width: 900px;
+        /* Products */
+        .products-section {
+            max-width: 1000px;
             margin: 0 auto;
             padding: 5rem 2rem;
         }
 
-        section h2 {
+        .products-section h2 {
             font-size: 2rem;
             font-weight: 400;
             color: #fff;
-            margin-bottom: 2rem;
-            position: relative;
-            padding-bottom: 0.75rem;
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: #7c5cbf;
-        }
-
-        /* Comparison callout */
-        .callout {
-            background: rgba(124, 92, 191, 0.08);
-            border-left: 3px solid #7c5cbf;
-            padding: 1.25rem 1.5rem;
-            margin: 2rem 0;
-            font-size: 1.05rem;
-            color: #c0c0d0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        /* Features grid */
-        .features {
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
-        .feature {
-            background: rgba(255, 255, 255, 0.03);
+        .product-card {
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: border-color 0.3s;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
-        .feature:hover {
-            border-color: rgba(124, 92, 191, 0.3);
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .feature h3 {
-            font-size: 1.05rem;
+        .product-card.scribe {
+            border-color: rgba(124, 92, 191, 0.15);
+        }
+        .product-card.scribe:hover {
+            border-color: rgba(124, 92, 191, 0.4);
+            box-shadow: 0 8px 30px rgba(124, 92, 191, 0.15);
+        }
+
+        .product-card.sigil {
+            border-color: rgba(46, 125, 80, 0.15);
+        }
+        .product-card.sigil:hover {
+            border-color: rgba(46, 125, 80, 0.4);
+            box-shadow: 0 8px 30px rgba(46, 125, 80, 0.15);
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
             font-weight: 500;
             color: #fff;
-            margin-bottom: 0.5rem;
         }
 
-        .feature p {
-            font-size: 0.95rem;
-            color: #999;
+        .product-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
         }
 
-        /* Audience */
-        .audience-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .audience-list li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            gap: 1rem;
-            align-items: baseline;
-        }
-
-        .audience-list li:last-child {
-            border-bottom: none;
-        }
-
-        .audience-list strong {
+        .badge-available {
+            background: rgba(124, 92, 191, 0.2);
             color: #a78bca;
-            min-width: 160px;
-            flex-shrink: 0;
         }
 
-        /* Why section - no bullets */
-        .why-list {
-            list-style: none;
-            margin-top: 1rem;
+        .badge-coming {
+            background: rgba(46, 125, 80, 0.2);
+            color: #5cb87a;
         }
 
-        .why-list li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+        .product-tagline {
+            font-size: 1.1rem;
             color: #b0b0c0;
+            margin-bottom: 1rem;
+            font-weight: 300;
         }
 
-        .why-list li::before {
+        .product-description {
+            font-size: 0.95rem;
+            color: #777;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            padding: 0.3rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .product-card.scribe .product-features li::before {
             content: '';
             position: absolute;
             left: 0;
             top: 50%;
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: #7c5cbf;
             border-radius: 50%;
             transform: translateY(-50%);
         }
 
-        /* Languages */
-        .lang-tier {
-            margin-bottom: 1.25rem;
+        .product-card.sigil .product-features li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            background: #2e7d50;
+            border-radius: 50%;
+            transform: translateY(-50%);
         }
 
-        .lang-tier h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .lang-tier.excellent h3 { color: #6ee06e; }
-        .lang-tier.good h3 { color: #e0c96e; }
-        .lang-tier.variable h3 { color: #e08e6e; }
-
-        .lang-tier p {
-            color: #999;
+        .product-cta {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
             font-size: 0.95rem;
-        }
-
-        /* System Requirements */
-        .req-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        @media (max-width: 600px) {
-            .req-grid {
-                grid-template-columns: 1fr;
-            }
-            .audience-list strong {
-                min-width: auto;
-            }
-            .audience-list li {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-        }
-
-        .req-col h3 {
-            font-size: 1.1rem;
-            color: #a78bca;
-            margin-bottom: 0.75rem;
             font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .req-col ul {
-            list-style: none;
+        .product-card.scribe .product-cta {
+            background: linear-gradient(135deg, #7c5cbf, #9b6dd7);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(124, 92, 191, 0.25);
+        }
+        .product-card.scribe .product-cta:hover {
+            box-shadow: 0 6px 25px rgba(124, 92, 191, 0.4);
         }
 
-        .req-col li {
-            padding: 0.3rem 0;
-            color: #999;
-            font-size: 0.95rem;
+        .product-card.sigil .product-cta {
+            background: linear-gradient(135deg, #2e7d50, #3a9d64);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(46, 125, 80, 0.25);
+        }
+        .product-card.sigil .product-cta:hover {
+            box-shadow: 0 6px 25px rgba(46, 125, 80, 0.4);
         }
 
-        /* Roadmap */
-        .roadmap-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-top: 1.5rem;
+        .product-price {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
         }
 
-        /* Disclaimer */
-        .disclaimer {
-            margin-top: 2rem;
-            padding: 1.25rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            font-size: 0.9rem;
+        /* About */
+        .about-section {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .about-section h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .about-section p {
             color: #777;
-        }
-
-        .disclaimer p {
-            margin-bottom: 0.4rem;
-        }
-
-        .disclaimer p:last-child {
-            margin-bottom: 0;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #555;
-            font-size: 0.85rem;
+            color: #444;
+            font-size: 0.8rem;
         }
 
-        footer a {
-            color: #7c5cbf;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Bottom CTA */
-        .bottom-cta {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: radial-gradient(ellipse at 50% 20%, rgba(124, 92, 191, 0.1) 0%, transparent 60%);
-        }
-
-        .bottom-cta h2 {
-            text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .bottom-cta h2::after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .bottom-cta p {
-            color: #888;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
+        @media (max-width: 650px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .philosophy-item {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -400,144 +308,72 @@
 
     <!-- Hero -->
     <div class="hero">
-        <h1 class="sr-only">Scribe — Offline AI Subtitle Generator and Speech to Text Software for Windows</h1>
-        <img src="hero-banner.png" alt="Scribe — offline AI subtitle generator and transcription tool. 100% offline, 99 languages, GPU accelerated." class="hero-image">
-        <p class="tagline"><strong>Drop a file. Get subtitles.</strong> Automatic subtitle generator with 99 languages, GPU accelerated, fully offline. Your files never leave your machine.</p>
-        <a href="https://hexwright-studios.itch.io/scribe" class="cta-button">Get Scribe on itch.io</a>
-        <span class="cta-price"><s>$19.99</s> $15.99 — launch discount</span>
+        <h1 class="studio-name"><strong>Hexwright</strong> Studios</h1>
+        <p class="studio-tagline">Desktop tools that work offline. No subscriptions, no cloud, no accounts. Buy once, keep forever.</p>
+        <div class="studio-philosophy">
+            <span class="philosophy-item">Offline-first</span>
+            <span class="philosophy-item">One-time purchase</span>
+            <span class="philosophy-item">No telemetry</span>
+            <span class="philosophy-item">Your data stays yours</span>
+        </div>
     </div>
 
-    <!-- Features -->
-    <section>
-        <h2>Features</h2>
-        <p style="color: #999; margin-bottom: 1.5rem;">Scribe is an offline speech-to-text software that turns audio and video files into accurate subtitles and transcripts — no internet connection required.</p>
-        <div class="callout">Cloud transcription tools charge per minute. Scribe runs locally and costs once.</div>
-        <div class="features">
-            <div class="feature">
-                <h3>Drag & Drop</h3>
-                <p>Drop any audio or video file — mp3, wav, mp4, mkv, webm, flac, and more.</p>
-            </div>
-            <div class="feature">
-                <h3>Subtitles & Transcripts</h3>
-                <p>Generate timed .srt subtitle files or plain .txt transcripts. Works as a video transcription tool or audio-to-text converter.</p>
-            </div>
-            <div class="feature">
-                <h3>99 Languages</h3>
-                <p>Automatic language detection. Supports 99 languages out of the box.</p>
-            </div>
-            <div class="feature">
-                <h3>GPU Accelerated</h3>
-                <p>Vulkan GPU acceleration for fast processing. Works on CPU too, just slower.</p>
-            </div>
-            <div class="feature">
-                <h3>Fully Offline</h3>
-                <p>One-time model download (~3 GB), then everything runs locally. No internet needed.</p>
-            </div>
-            <div class="feature">
-                <h3>No Subscriptions</h3>
-                <p>Pay once, use forever. No accounts, no API keys, no per-minute charges.</p>
-            </div>
-        </div>
-    </section>
+    <!-- Products -->
+    <div class="products-section">
+        <h2>Products</h2>
+        <div class="products-grid">
 
-    <!-- Who's this for -->
-    <section>
-        <h2>Who's this for?</h2>
-        <ul class="audience-list">
-            <li><strong>Content creators</strong> <span>Generate subtitles for YouTube, TikTok, and video platforms without paying per minute.</span></li>
-            <li><strong>Podcasters</strong> <span>Turn episodes into transcripts instantly.</span></li>
-            <li><strong>Students</strong> <span>Transcribe lectures or recordings for easier studying.</span></li>
-            <li><strong>Translators</strong> <span>Create a first-pass transcript to clean up.</span></li>
-            <li><strong>Privacy-conscious users</strong> <span>Your audio never gets uploaded to a server.</span></li>
-        </ul>
-    </section>
-
-    <!-- Why Scribe -->
-    <section>
-        <h2>Why Scribe?</h2>
-        <p style="color: #999; margin-bottom: 1rem;">Most transcription tools are cloud services. That means uploading files, waiting for processing, paying per minute, and trusting someone else with your audio.</p>
-        <p style="color: #b0b0c0; margin-bottom: 1rem;">Scribe works differently:</p>
-        <ul class="why-list">
-            <li>No uploads — everything stays on your machine</li>
-            <li>No subscriptions — pay once, use forever</li>
-            <li>No waiting — processing starts immediately, on your hardware</li>
-            <li>No internet needed — works fully offline after setup</li>
-        </ul>
-    </section>
-
-    <!-- Language Support -->
-    <section>
-        <h2>Language Support</h2>
-        <p style="color: #999; margin-bottom: 1.5rem;">Powered by OpenAI's Whisper large-v3 speech recognition model — the same AI used by professional transcription services, running entirely on your local machine.</p>
-        <div class="lang-tier excellent">
-            <h3>Excellent accuracy</h3>
-            <p>English, Chinese, German, Spanish, French, Japanese, Portuguese, Russian, Korean, Italian, Dutch, Polish, Swedish, Turkish, Arabic</p>
-        </div>
-        <div class="lang-tier good">
-            <h3>Good accuracy</h3>
-            <p>Most European, East Asian, and South Asian languages</p>
-        </div>
-        <div class="lang-tier variable">
-            <h3>Variable accuracy</h3>
-            <p>Less common languages may have reduced accuracy</p>
-        </div>
-        <p style="color: #777; margin-top: 1rem; font-size: 0.9rem;">Audio quality matters. Clean recordings (podcasts, lectures, interviews) give the best results. Heavy background music or overlapping speech will reduce accuracy.</p>
-    </section>
-
-    <!-- System Requirements -->
-    <section>
-        <h2>System Requirements</h2>
-        <div class="req-grid">
-            <div class="req-col">
-                <h3>Minimum</h3>
-                <ul>
-                    <li>Windows 10 (64-bit)</li>
-                    <li>8 GB RAM</li>
-                    <li>4 GB storage</li>
-                    <li>Any modern x64 CPU</li>
-                    <li>4 GB VRAM (GPU mode)</li>
+            <!-- Scribe -->
+            <div class="product-card scribe">
+                <div class="product-header">
+                    <span class="product-name">Scribe</span>
+                    <span class="product-badge badge-available">Available</span>
+                </div>
+                <p class="product-tagline">Drop a file. Get subtitles.</p>
+                <p class="product-description">Offline AI subtitle generator and speech-to-text tool. Powered by Whisper large-v3. Drag and drop any audio or video file, get accurate .srt subtitles or .txt transcripts.</p>
+                <ul class="product-features">
+                    <li>99 languages, automatic detection</li>
+                    <li>GPU accelerated (Vulkan)</li>
+                    <li>Fully offline after setup</li>
+                    <li>Batch processing</li>
                 </ul>
+                <a href="scribe/" class="product-cta">Learn More</a>
+                <span class="product-price"><s>$19.99</s> $15.99 — launch discount</span>
             </div>
-            <div class="req-col">
-                <h3>Recommended</h3>
-                <ul>
-                    <li>16 GB RAM</li>
-                    <li>Vulkan-compatible GPU</li>
-                    <li>6+ GB VRAM</li>
-                    <li>NVIDIA / AMD / Intel Arc</li>
+
+            <!-- Sigil -->
+            <div class="product-card sigil">
+                <div class="product-header">
+                    <span class="product-name">Sigil</span>
+                    <span class="product-badge badge-coming">Coming Soon</span>
+                </div>
+                <p class="product-tagline">You know what you want to see. Just say it.</p>
+                <p class="product-description">Prompt translator for Stable Diffusion. Write what you want in plain English and get the booru tags SD actually understands. Built for people who don't want to memorize tag syntax.</p>
+                <ul class="product-features">
+                    <li>Natural language to SD-optimized tags</li>
+                    <li>Tag validation and highlighting</li>
+                    <li>Searchable tag database (111K+ tags)</li>
+                    <li>One-click quality presets per model type</li>
+                    <li>Smart VRAM management</li>
                 </ul>
+                <a href="sigil/" class="product-cta">Learn More</a>
+                <span class="product-price">Price TBD</span>
             </div>
+
         </div>
-        <p style="color: #777; margin-top: 1.25rem; font-size: 0.9rem;">A GPU makes a huge difference in processing speed.</p>
-    </section>
+    </div>
 
-    <!-- Roadmap -->
-    <section class="roadmap-section">
-        <h2>What's Next</h2>
-        <img src="roadmap.png" alt="Scribe Software Roadmap — v1 Transcription (Now), v2 Translation & Audio (Next), v3 Extensions (Future)" class="roadmap-image">
-    </section>
-
-    <!-- Disclaimer -->
-    <section>
-        <div class="disclaimer">
-            <p>This is AI transcription. It's good, but not perfect — no tool is. Expect occasional errors with accents, mumbling, overlapping speakers, or noisy audio.</p>
-            <p>Some languages work much better than others.</p>
-            <p>Scribe is currently a transcription tool, not a translator — translation is planned for v2.</p>
-        </div>
-    </section>
-
-    <!-- Bottom CTA -->
-    <div class="bottom-cta">
-        <h2>Ready to try Scribe?</h2>
-        <p>Pay once. Use forever. No subscriptions.</p>
-        <a href="https://hexwright-studios.itch.io/scribe" class="cta-button">Get Scribe on itch.io</a>
-        <span class="cta-price"><s>$19.99</s> $15.99 — launch discount</span>
+    <!-- About -->
+    <div class="about-section">
+        <h2>About</h2>
+        <p>Hexwright Studios is a solo developer studio building desktop tools that respect your privacy and your wallet.</p>
+        <p>Every product runs locally, works offline, and costs once. No subscriptions, no cloud dependency, no data harvesting.</p>
+        <p>Our tools are one-time purchases. Larger platform products may use different licensing models, but we'll always be upfront about it.</p>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>Scribe by Hexwright Studios — Offline AI subtitle generator and transcription software for Windows</p>
-        <p style="margin-top: 0.5rem;">Powered by <a href="https://github.com/openai/whisper" target="_blank" rel="noopener">OpenAI Whisper</a> (MIT License)</p>
+        <p>&copy; 2026 Hexwright Studios</p>
     </footer>
 
 </body>

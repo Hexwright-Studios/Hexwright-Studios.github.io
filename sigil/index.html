@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sigil — AI Prompt Translator for Stable Diffusion</title>
+    <meta name="description" content="Sigil translates plain English into optimized Stable Diffusion prompts. No booru tag memorization needed. Type what you want to see, get working SD prompts. Offline, one-time purchase.">
+    <meta name="keywords" content="stable diffusion prompt generator, AI prompt translator, booru tags, SD prompt tool, ComfyUI prompt helper, natural language to SD, stable diffusion for beginners, prompt engineering tool, SD tag generator, image generation prompt">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Hexwright Studios">
+
+    <meta property="og:title" content="Sigil — AI Prompt Translator for Stable Diffusion">
+    <meta property="og:description" content="Type what you want to see. Get optimized SD prompts. No booru tag memorization, no tutorials needed.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hexwright Studios">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sigil — AI Prompt Translator for Stable Diffusion">
+    <meta name="twitter:description" content="Type what you want to see. Get optimized SD prompts. No tutorials needed.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Sigil",
+        "description": "AI-powered natural language to Stable Diffusion prompt translator. Type plain English, get optimized booru tags.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Windows 10+",
+        "author": {
+            "@type": "Organization",
+            "name": "Hexwright Studios"
+        },
+        "featureList": "NL to SD prompt translation, tag validation, searchable tag database, quality presets, VRAM management"
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background: #0d0d1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Nav */
+        .nav {
+            padding: 1rem 2rem;
+        }
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav a:hover {
+            color: #999;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at 50% 80%, rgba(46, 125, 80, 0.12) 0%, transparent 60%),
+                        linear-gradient(180deg, #0d0d1a 0%, #0f1a14 100%);
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2e7d50, transparent);
+        }
+
+        .hero-image {
+            max-width: 700px;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero .tagline {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: #b0c0b0;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .hero .tagline strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #2e7d50, #3a9d64);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(46, 125, 80, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(46, 125, 80, 0.5);
+            background: linear-gradient(135deg, #3a9d64, #4ab874);
+        }
+
+        .cta-status {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Sections */
+        section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #2e7d50;
+        }
+
+        /* Problem/Solution */
+        .problem {
+            background: rgba(255, 100, 100, 0.05);
+            border-left: 3px solid rgba(255, 100, 100, 0.3);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: #c0b0b0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .solution {
+            background: rgba(46, 125, 80, 0.08);
+            border-left: 3px solid #2e7d50;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            color: #b0c0b0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Features grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        .feature:hover {
+            border-color: rgba(46, 125, 80, 0.3);
+        }
+
+        .feature h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            font-size: 0.95rem;
+            color: #999;
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .steps li {
+            counter-increment: step;
+            padding: 1rem 0 1rem 3.5rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #b0b0c0;
+        }
+
+        .steps li:last-child {
+            border-bottom: none;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: rgba(46, 125, 80, 0.15);
+            color: #5cb87a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .steps li strong {
+            color: #fff;
+        }
+
+        .steps li .note {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        /* Learn section */
+        .learn-topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .learn-topic {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .learn-topic h3 {
+            font-size: 0.95rem;
+            color: #5cb87a;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        .learn-topic p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* System Requirements */
+        .req-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .req-col h3 {
+            font-size: 1.1rem;
+            color: #5cb87a;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .req-col ul {
+            list-style: none;
+        }
+
+        .req-col li {
+            padding: 0.3rem 0;
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        /* Bottom CTA */
+        .bottom-cta {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(ellipse at 50% 20%, rgba(46, 125, 80, 0.08) 0%, transparent 60%);
+        }
+
+        .bottom-cta h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .bottom-cta h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bottom-cta p {
+            color: #888;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #2e7d50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .req-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav">
+        <a href="../">&larr; Hexwright Studios</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1 class="sr-only">Sigil — AI Prompt Translator for Stable Diffusion</h1>
+        <img src="hero-banner.png" alt="Sigil — type English, get SD prompts. A glowing green magical sigil transforms plain text into tag bubbles." class="hero-image">
+        <p class="tagline"><strong>You know what you want to see. Just say it.</strong> Type plain English, get Stable Diffusion prompts that actually work. You don't need to memorize tags or read tutorials.</p>
+        <a href="#" class="cta-button">Coming Soon</a>
+        <span class="cta-status">One-time purchase, fully offline.</span>
+    </div>
+
+    <!-- The Problem -->
+    <section>
+        <h2>The Problem</h2>
+        <div class="problem">
+            You downloaded Stable Diffusion. You found a cool model. You opened the prompt box and... now what? What do you type? What are "booru tags"? Why does "a pretty girl in a forest" give you garbage?
+        </div>
+        <div class="solution">
+            <strong>Sigil fixes this.</strong> You type what you want in plain English, and Sigil translates it into the tags that Stable Diffusion needs. You can have your first image in about 15 minutes.
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section>
+        <h2>Features</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Natural Language Input</h3>
+                <p>Describe what you want to see in plain English. Something like "a knight in silver armor at sunset" and Sigil turns it into the tags SD needs.</p>
+            </div>
+            <div class="feature">
+                <h3>Tag Validation</h3>
+                <p>Every tag is checked against 111,000+ known tags. Valid tags show up green, unknown ones show red, so you can tell what works before you generate.</p>
+            </div>
+            <div class="feature">
+                <h3>Searchable Tag Database</h3>
+                <p>Search tags right from the input field. Find tags you didn't know existed, see popularity counts, add them to your prompt.</p>
+            </div>
+            <div class="feature">
+                <h3>Quality Presets</h3>
+                <p>One-click quality tags for Pony, Illustrious, or generic models. Each model type has its own "magic words" and Sigil helps you pick the right ones.</p>
+            </div>
+            <div class="feature">
+                <h3>Smart VRAM Management</h3>
+                <p>Low VRAM mode automatically loads and unloads the AI model around each translation, so Sigil and SD can share the same GPU.</p>
+            </div>
+            <div class="feature">
+                <h3>Fully Offline</h3>
+                <p>One-time model download, then everything runs on your machine. No internet needed, no cloud, no API keys.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section>
+        <h2>From Zero to First Image</h2>
+        <p style="color: #999; margin-bottom: 0.5rem;">No experience needed. 15 minutes, start to finish.</p>
+        <ol class="steps">
+            <li>
+                <strong>Download ComfyUI</strong>
+                <span class="note">Free, open-source image generation software.</span>
+            </li>
+            <li>
+                <strong>Grab a model from CivitAI</strong>
+                <span class="note">Pick one that looks cool. PonyXL, NoobAI, and RealisticPony are great starting points.</span>
+            </li>
+            <li>
+                <strong>Drop the model in ComfyUI's models folder</strong>
+                <span class="note">That's the only setup ComfyUI needs.</span>
+            </li>
+            <li>
+                <strong>Open Sigil, type what you want</strong>
+                <span class="note">"A girl with red hair in a cherry blossom forest." Plain English.</span>
+            </li>
+            <li>
+                <strong>Send to ComfyUI, get your image</strong>
+                <span class="note">Done. You just generated your first AI image. Everything else is optional.</span>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Learn More (in-app) -->
+    <section>
+        <h2>Learn at Your Own Pace</h2>
+        <p style="color: #999; margin-bottom: 1rem;">Sigil includes short explanations of SD concepts built right in. Not full tutorials, just enough to know what something does and whether you need it.</p>
+        <div class="learn-topics">
+            <div class="learn-topic">
+                <h3>What are LoRAs?</h3>
+                <p>Extra training that teaches SD specific things. Like mods for a game. Optional.</p>
+            </div>
+            <div class="learn-topic">
+                <h3>What is CFG?</h3>
+                <p>How closely SD follows your prompt. Higher = more literal. 7 is a safe default.</p>
+            </div>
+            <div class="learn-topic">
+                <h3>What are samplers?</h3>
+                <p>Different ways SD builds the image. Some faster, some prettier. Euler works fine.</p>
+            </div>
+            <div class="learn-topic">
+                <h3>Model compatibility</h3>
+                <p>Pony models need Pony LoRAs. SDXL needs SDXL LoRAs. Not everything mixes.</p>
+            </div>
+            <div class="learn-topic">
+                <h3>Prompt weights</h3>
+                <p>(tag:1.2) means "more of this." Default is 1.0. Don't go crazy.</p>
+            </div>
+            <div class="learn-topic">
+                <h3>Negative prompts</h3>
+                <p>Tags for things you DON'T want. Bad hands, extra fingers. Common ones are built in.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Requirements -->
+    <section>
+        <h2>System Requirements</h2>
+        <div class="req-grid">
+            <div class="req-col">
+                <h3>Minimum</h3>
+                <ul>
+                    <li>Windows 10 (64-bit)</li>
+                    <li>8 GB RAM</li>
+                    <li>GPU with 6 GB VRAM, or CPU (slower)</li>
+                    <li>5 GB storage</li>
+                </ul>
+            </div>
+            <div class="req-col">
+                <h3>Recommended</h3>
+                <ul>
+                    <li>16 GB RAM</li>
+                    <li>8+ GB VRAM</li>
+                    <li>NVIDIA / AMD / Intel Arc</li>
+                </ul>
+            </div>
+        </div>
+        <p style="color: #777; margin-top: 1.25rem; font-size: 0.9rem;">Sigil includes a Low VRAM mode for GPUs under 14GB that automatically manages model loading so Sigil and SD can share the GPU.</p>
+    </section>
+
+    <!-- Roadmap -->
+    <section>
+        <h2>What's Next</h2>
+        <img src="roadmap.png" alt="Sigil Roadmap — v1.0 Now (NL to tag translation, validation, searchable DB, quality presets, VRAM management), v2.0 Next (character library, prompt history, ComfyUI integration), v3.0 Future (community ecosystem packs, model recommendations, ratings)" style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 1.5rem;">
+    </section>
+
+    <!-- Bottom CTA -->
+    <div class="bottom-cta">
+        <h2>Ready to try Stable Diffusion?</h2>
+        <p>Skip the tutorials. Just say what you want to see.</p>
+        <a href="#" class="cta-button">Coming Soon</a>
+        <span class="cta-status">One-time purchase, fully offline, no subscriptions.</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Sigil by <a href="../">Hexwright Studios</a></p>
+    </footer>
+
+</body>
+</html>
