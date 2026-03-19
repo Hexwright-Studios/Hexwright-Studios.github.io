@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hexwright-studios.github.io/sitemap.xml
