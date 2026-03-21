@@ -25,7 +25,7 @@
         "name": "Sigil",
         "description": "AI-powered natural language to Stable Diffusion prompt translator. Type plain English, get optimized booru tags.",
         "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Windows 10+",
+        "operatingSystem": "Windows 10+, Linux (Debian/Ubuntu)",
         "author": {
             "@type": "Organization",
             "name": "Hexwright Studios"
@@ -408,7 +408,7 @@
         <div class="features">
             <div class="feature">
                 <h3>Natural Language Input</h3>
-                <p>Describe what you want to see in plain English. Something like "a knight in silver armor at sunset" and Sigil turns it into the tags SD needs.</p>
+                <p>Describe what you want to see in plain English. Something like "a knight in silver armor at sunset" and Sigil turns it into the tags SD needs. Custom model trained on 300K+ tag translations with SFW/NSFW toggle.</p>
             </div>
             <div class="feature">
                 <h3>Tag Validation</h3>
@@ -446,7 +446,7 @@
         <h2>Which models work best?</h2>
         <p style="color: #999;">Sigil works best with booru-trained models like Pony, Illustrious, and NoobAI. These models were trained on tagged image data, so they respond well to the tags Sigil generates.</p>
         <p style="color: #777; margin-top: 0.75rem;">For realistic or SDXL-based models, plain English descriptions often work just as well on their own. Sigil can still help, but those models don't rely on booru tags the same way.</p>
-        <p style="color: #777; margin-top: 0.75rem;">We're working on a custom-trained model for more accurate tag translation in future updates.</p>
+        <p style="color: #777; margin-top: 0.75rem;">Sigil v1.2 includes an experimental custom-trained model (300K+ examples) with SFW/NSFW toggle for better tag accuracy.</p>
     </section>
 
     <!-- Getting Started -->
@@ -516,7 +516,7 @@
             <div class="req-col">
                 <h3>Minimum</h3>
                 <ul>
-                    <li>Windows 10 (64-bit)</li>
+                    <li>Windows 10 (64-bit) or Linux (Debian/Ubuntu)</li>
                     <li>8 GB RAM</li>
                     <li>GPU with 6 GB VRAM, or CPU (slower)</li>
                     <li>5 GB storage</li>
@@ -537,11 +537,11 @@
     <!-- Roadmap -->
     <section>
         <h2>What's Next</h2>
-        <p style="color: #999; margin-bottom: 1rem;">Character detection, prompt history, and dual tag database shipped in v1.1. Here's what's coming:</p>
+        <p style="color: #999; margin-bottom: 1rem;">Character detection, prompt history, dual tag database (v1.1), and custom-trained model with SFW/NSFW toggle (v1.2) are live. Here's what's coming:</p>
         <div class="features">
             <div class="feature">
                 <h3 style="color: #5cb87a;">v2.0</h3>
-                <p>Custom-trained model for better tag accuracy. Direct ComfyUI prompt sending. Favorites and quick-access prompts.</p>
+                <p>Direct ComfyUI prompt sending. Favorites and quick-access prompts. Improved model accuracy with more training data.</p>
             </div>
             <div class="feature">
                 <h3 style="color: #5cb87a;">v3.0</h3>
